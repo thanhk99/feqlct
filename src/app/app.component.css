@@ -1,0 +1,9 @@
+main{
+    width: 70vw;
+    height: 85vh;
+    background-color: white;
+    border-radius: 15px;
+    position: relative;
+    left: 15vw;
+    top: 8vh;
+}

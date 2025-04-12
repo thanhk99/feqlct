@@ -1,1 +1,9 @@
 /* You can add global styles to this file, and also import other style files */
+body{
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    background-image: url('https://media.istockphoto.com/id/858983438/vi/anh/n%E1%BB%81n-m%C3%A0u-xanh-d%C6%B0%C6%A1ng-v%C3%A0-h%E1%BB%93ng-nh%E1%BA%A1t.jpg?s=612x612&w=0&k=20&c=MZH_J9CiHVXFpAp9McAFZLqyxH8GhkuSnPAvE0AXCF4=');
+    background-repeat: no-repeat;
+    background-size: cover;
+}

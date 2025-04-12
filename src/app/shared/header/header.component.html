@@ -1,0 +1,72 @@
+<header>
+    <div class="head">
+        <div class="user">
+            <p (click)="openMenu()"><i class="fa-solid fa-bars" style="color: #fcfcfc;"></i></p>
+            <p id="username">Username</p>
+            <div class="user-box">
+                <p><i class="fa-solid fa-circle-user"></i></p>
+            </div>
+        </div>
+        <div class="component">
+            <div class="row-com">
+                <div class="col-com card">
+                    <div class="title">
+                        Sơ lược
+                    </div>
+                    <div class="content-com">
+                        <div class="col-1">
+                            <span class="time">
+                                Tháng Tư, 2025
+                            </span>
+                            <div class="chart-container">
+                                <canvasjs-chart [options]="chartOptions"></canvasjs-chart>
+                            </div>
+                        </div>
+                        <div class="col-2">
+                            <div class="row-summary"><span>Thu nhập : </span> <span style="color: greenyellow;"> 0Đ</span></div>
+                            <div class="row-summary"><span>Chi phí : </span> <span style="color: rgb(236, 17, 28);"> 0Đ</span></div>
+                            <div class="row-summary"><span>Tổng cộng : </span> <span style="color: rgb(15, 15, 15);"> 0Đ</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-com card">
+                    <div class="title">
+                        Các tài khoản
+                    </div>
+                    <div class="content-summary">
+                        <div class="row-atm">
+                            <div class="atm-info">
+                                <span>Ví</span>
+                                <span>Sử dụng lần cuối:12/04/2025</span>
+                            </div>
+                            <div class="atm-balance">
+                                <span>0VND </span>
+                            </div>
+                        </div>
+                        <hr style="border: .1px solid rgba(216,216,216,.7); width: 70%; margin: auto;">
+                        <div class="row-atm">
+                            <div class="atm-info">
+                                <span>Ví</span>
+                                <span>Sử dụng lần cuối:12/04/2025</span>
+                            </div>
+                            <div class="atm-balance">
+                                <span>0VND </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="menu-head hidden" [ngClass]="{'hidden': isHidden}" >
+        <div class="close" (click)="openMenu()">
+            <i class="fa-solid fa-xmark" style="color: #fcfcfc;"></i>
+        </div>
+        <ul>
+            <li (click)="pageHome()"><i class="fa-solid fa-house" style="color: #f0f2f5;"></i>Trang chủ</li>
+            <li (click)="pageTransaction()"><i class="fa-solid fa-money-check-dollar" style="color: #fafafa;"></i>Các giao dịch</li>
+            <li><i class="fa-solid fa-building-columns" style="color: #eceff3;"></i>Các tài khoản</li>
+            <li><i class="fa-solid fa-right-from-bracket" style="color: #ffffff;"></i>Đăng xuất</li>
+        </ul>
+    </div>
+</header>

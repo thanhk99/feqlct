@@ -1,0 +1,150 @@
+header{
+    width: 100%;
+    height: 30%;
+    background-color: #234D73;
+    border-radius: 10px 10px 50px 0;
+}
+.head{
+    width: 100%;
+    height: 20%;
+}
+.card{
+    background-color: white;
+    box-shadow:
+    0 1px 1px hsl(0deg 0% 0% / 0.075),
+    0 2px 2px hsl(0deg 0% 0% / 0.075),
+    0 4px 4px hsl(0deg 0% 0% / 0.075),
+    0 8px 8px hsl(0deg 0% 0% / 0.075),
+    0 16px 16px hsl(0deg 0% 0% / 0.075);
+    border-radius: 10px;
+}
+.user{
+    width: 80%;
+    margin-left: 10%;
+    display: flex;
+    justify-content: space-between;
+    text-align: center;
+    color: white;
+}
+.user p{
+    cursor: pointer;
+    font-size: 18px;
+}
+.user #username{
+    font-size: 18px;
+    font-weight: bold;
+    font-family: serif;
+}
+.component{
+    width: 100%;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    display: flex;
+}
+.row-com{
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+}
+.col-com{
+
+    padding: 1% 0%;
+    width: 30%;
+}
+.col-com .title{
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+.content-com{
+    display: flex;
+    width: 100%;
+    justify-content: space-around;
+}
+.chart-container{
+    height: 85px;
+    border-radius: 20px;
+    overflow: hidden;
+}
+#canvasjs-angular-chart-container-16{
+    height: 70%;
+}
+.col-2{
+    display: flex;
+    float: left;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 40%;
+}
+.row-summary{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    float: left;
+}
+.content-summary{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.row-atm{
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+}
+.atm-info{
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+}
+.atm-info span{
+    font-size: 18px;
+    font-weight: bold;
+}
+.atm-balance{
+    font-size: 18px;
+    text-align: center;
+    transform: translateY(25%);
+}
+.menu-head{
+    position: absolute;
+    width: 15%;
+    height: 100%;
+    background-color: rgba(0,0,0,.9);
+    left: 0;
+    top: 0;
+    bottom: 0;
+    border-radius: 10px 0 0 10px;
+
+}
+.close{
+    position: absolute;
+    font-size: 24px;
+    cursor: pointer;
+    right: 0;
+    transition: ease-in-out 0.5s;
+}
+.hidden{
+    display: none;
+    transition: ease-in-out 0.5s;
+}
+ul{
+    list-style: none;
+    width: 70%;
+    margin: 35% auto;
+    height: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+li{
+    color: white;
+    width: 100%;
+    cursor: pointer;
+    padding: 10px 0px ;
+    border-radius: 5px;
+}
+li:hover{
+    background-color: rgba(255,255,255,.5);
+}
