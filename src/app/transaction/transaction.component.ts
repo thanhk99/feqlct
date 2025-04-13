@@ -1,38 +1,123 @@
 import { NgFor, NgIf } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { UserService } from '../service/user.service';
+import { TransactionService } from '../service/transaction.service';
+import { WalletService } from '../service/wallet.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-transaction',
-  imports: [NgFor,NgIf,FormsModule],
+  imports: [NgFor, NgIf, FormsModule],
   templateUrl: './transaction.component.html',
-  styleUrl: './transaction.component.css'
+  styleUrls: ['./transaction.component.css']
 })
 export class TransactionComponent implements OnInit {
   showMenu: boolean[] = [];
   isActive: boolean[] = [];
-  isEditing: boolean[] = []; 
+  isEditing: boolean[] = [];
   tempItem: any = null;
-  data=[
-    {id:1,category:'Ăn uống',Wallet:'Atm',Amount:20000,date:'12/04/2025'},
-    {id:2,category:'Ăn uống',Wallet:'Atm',Amount:20000,date:'12/04/2025'},
-    {id:3,category:'Ăn uống',Wallet:'Atm',Amount:20000,date:'12/04/2025'},
-    {id:4,category:'Ăn uống',Wallet:'Atm',Amount:20000,date:'12/04/2025'},
-    {id:5,category:'Ăn uống',Wallet:'Atm',Amount:20000,date:'12/04/2025'},
-    {id:6,category:'Ăn uống',Wallet:'Atm',Amount:20000,date:'12/04/2025'}
-  ]
-  constructor() { 
-    this.data.forEach(() => {
-      this.showMenu.push(false);
-      this.isActive.push(false); 
-      this.isEditing.push(false);
-    })
+
+  data = [{ id: 1, category: 'Ăn uống', Wallet: 'Atm', Amount: 20000, date: '12/04/2025', nameWallet: '' }];
+
+  // Phân trang
+  currentPage: number = 1;
+  itemsPerPage: number = 5; // Số lượng giao dịch mỗi trang
+  totalPages: number = 1;
+  paginatedData: any[] = [];
+
+  constructor(
+    private userService: UserService,
+    private transactionService: TransactionService,
+    private walletService: WalletService
+  ) {
+    this.updatePagination();
   }
-  Edit(id:any){
-  }
+
   ngOnInit(): void {
-    this.showMenu = new Array(this.data.length).fill(false);
+    this.transactionService.getHisTrans(this.userService.getCookieID()).subscribe(
+      (data: any) => {
+        // Ánh xạ dữ liệu giao dịch và thêm nameWallet
+        this.data = data.map((item: any) => ({
+          id: item.id,
+          type: item.type || item.category,
+          idWallet: item.idWallet || item.Wallet,
+          amount: item.amount || item.Amount,
+          time: item.time,
+          nameWallet: '' // Khởi tạo nameWallet rỗng ban đầu
+        }));
+        // Gọi hàm để lấy nameWallet cho từng giao dịch
+        this.fetchWalletNames();
+        this.updatePagination();
+      },
+      (error: any) => {
+        console.error('Lỗi khi lấy dữ liệu giao dịch:', error);
+      }
+    );
   }
+
+  // Hàm lấy nameWallet cho tất cả giao dịch
+  fetchWalletNames() {
+    this.data.forEach((item: any, index: number) => {
+      if (item.idWallet) {
+        this.getNameWallet(item.idWallet).subscribe(
+          (nameWallet: string) => {
+            this.data[index].nameWallet = nameWallet;
+            this.updatePagination(); // Cập nhật lại phân trang để hiển thị nameWallet
+          },
+          (error: any) => {
+            console.error(`Lỗi khi lấy nameWallet cho Wallet ID ${item.Wallet}:`, error);
+            this.data[index].nameWallet = 'Không xác định';
+            this.updatePagination();
+          }
+        );
+      }
+    });
+  }
+
+  // Hàm lấy nameWallet từ WalletService
+  getNameWallet(id: any): any {
+    return new Observable<string>(observer => {
+      this.walletService.getWallet(id).subscribe(
+        (res: any) => {
+          observer.next(res.nameWallet || 'Không xác định');
+          observer.complete();
+        },
+        (error: any) => {
+          observer.error(error);
+        }
+      );
+    });
+  }
+
+  // Cập nhật dữ liệu phân trang
+  updatePagination() {
+    this.showMenu = new Array(this.data.length).fill(false);
+    this.isActive = new Array(this.data.length).fill(false);
+    this.isEditing = new Array(this.data.length).fill(false);
+
+    this.totalPages = Math.ceil(this.data.length / this.itemsPerPage);
+    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+    const endIndex = startIndex + this.itemsPerPage;
+    this.paginatedData = this.data.slice(startIndex, endIndex);
+  }
+
+  // Chuyển sang trang trước
+  previousPage() {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+      this.updatePagination();
+    }
+  }
+
+  // Chuyển sang trang tiếp theo
+  nextPage() {
+    if (this.currentPage < this.totalPages) {
+      this.currentPage++;
+      this.updatePagination();
+    }
+  }
+
   toggleMenu(index: number) {
     if (this.isActive[index]) {
       this.isActive[index] = false;
@@ -45,31 +130,32 @@ export class TransactionComponent implements OnInit {
       this.showMenu[index] = true;
     }
   }
+
   editItem(index: number) {
-    // Chuyển hàng sang chế độ chỉnh sửa
     this.isEditing[index] = true;
-    // Lưu dữ liệu tạm thời để có thể hủy chỉnh sửa nếu cần
     this.tempItem = { ...this.data[index] };
-    this.showMenu[index] = false; // Ẩn menu
-    this.isActive[index] = false; // Tắt sáng
+    this.showMenu[index] = false;
+    this.isActive[index] = false;
   }
+
   saveItem(index: number) {
-    // Lưu dữ liệu và thoát chế độ chỉnh sửa
     this.isEditing[index] = false;
-    this.tempItem = null; // Xóa dữ liệu tạm
+    this.tempItem = null;
   }
 
   cancelEdit(index: number) {
-    // Hủy chỉnh sửa, khôi phục dữ liệu ban đầu
     this.data[index] = { ...this.tempItem };
     this.isEditing[index] = false;
-    this.tempItem = null; // Xóa dữ liệu tạm
+    this.tempItem = null;
   }
+
   deleteItem(index: number) {
-    console.log('Xóa mục:', this.data[index]);
-    this.data.splice(index, 1);
-    this.showMenu.splice(index, 1);
-    this.isActive.splice(index, 1);
-    this.isEditing.splice(index, 1);
+    if (confirm('Bạn có chắc chắn muốn xóa giao dịch này không?')) {
+      const actualIndex = (this.currentPage - 1) * this.itemsPerPage + index;
+      this.data.splice(actualIndex, 1);
+      // Cập nhật lại ID cho các giao dịch sau khi xóa
+      this.data.forEach((item, i) => (item.id = i + 1));
+      this.updatePagination();
+    }
   }
 }

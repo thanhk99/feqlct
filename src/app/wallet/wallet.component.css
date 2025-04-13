@@ -1,0 +1,139 @@
+.main-content {
+  padding: 20px;
+}
+
+.accounts-section h3 {
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+}
+
+.account-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.account-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  background-color: #f5f5f5;
+  border-radius: 8px;
+}
+
+.account-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.account-name {
+  font-weight: bold;
+  margin: 0;
+}
+
+.account-last-used {
+  color: #888;
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+.account-balance {
+  font-weight: bold;
+  color: #333;
+}
+
+.account-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.account-actions button {
+  padding: 5px 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.account-actions button:first-child {
+  background-color: #007bff;
+  color: white;
+}
+
+.account-actions button:first-child:hover {
+  background-color: #0056b3;
+}
+
+.delete-btn {
+  background-color: #dc3545;
+  color: white;
+}
+
+.delete-btn:hover {
+  background-color: #c82333;
+}
+
+.edit-account-form {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.edit-account-form input {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 0.9rem;
+}
+
+.edit-account-form button:nth-child(3) {
+  background-color: #28a745;
+  color: white;
+}
+
+.edit-account-form button:nth-child(3):hover {
+  background-color: #218838;
+}
+
+.edit-account-form button:nth-child(4) {
+  background-color: #dc3545;
+  color: white;
+}
+
+.edit-account-form button:nth-child(4):hover {
+  background-color: #c82333;
+}
+
+.create-account-section {
+  margin-top: 20px;
+}
+
+.create-account-section h4 {
+  font-size: 1.1rem;
+  margin-bottom: 10px;
+}
+
+.create-account-form {
+  display: flex;
+  gap: 10px;
+}
+
+.create-account-form input {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 0.9rem;
+}
+
+.create-account-form button {
+  padding: 8px 16px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.create-account-form button:hover {
+  background-color: #0056b3;
+}

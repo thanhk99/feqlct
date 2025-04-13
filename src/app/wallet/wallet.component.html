@@ -1,0 +1,58 @@
+<div class="main-content">
+  <div class="accounts-section">
+    <h3>Các tài khoản</h3>
+    <div class="account-list">
+      <div *ngFor="let account of accounts; let i = index" class="account-item">
+        <!-- Hiển thị thông tin tài khoản nếu không đang chỉnh sửa -->
+        <div *ngIf="!account.isEditing" class="account-info">
+          <p class="account-name">{{ account.nameWallet }}</p>
+        </div>
+        <p *ngIf="!account.isEditing" class="account-balance">{{ account.balance }}{{account.currency}}</p>
+        <div *ngIf="!account.isEditing" class="account-actions">
+          <button (click)="startEditing(i)">Chỉnh sửa</button>
+          <button class="delete-btn" (click)="deleteAccount(account.id,i)">Xóa</button>
+        </div>
+
+        <!-- Form chỉnh sửa khi nhấn nút "Chỉnh sửa" -->
+        <div *ngIf="account.isEditing" class="edit-account-form">
+          <input
+            type="text"
+            [(ngModel)]="account.nameWallet"
+            placeholder="Tên tài khoản"
+            required
+          />
+          <input
+            type="number"
+            [(ngModel)]="account.balance"
+            placeholder="Số dư (VD: 0 VNĐ)"
+            required
+          />
+
+          <button (click)="saveEdit(i,account.id,account.balance,account.nameWallet)">Lưu</button>
+          <button (click)="cancelEdit(i)">Hủy</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="create-account-section">
+    <h4>Tạo tài khoản mới</h4>
+    <div class="create-account-form">
+      <input
+        type="text"
+        [(ngModel)]="newAccount.nameWallet"
+        placeholder="Tên tài khoản"
+        required
+      />
+      <input
+        type="number"
+        [(ngModel)]="newAccount.balance"
+        placeholder="Số dư ban đầu (VD: 0 VNĐ)"
+        required
+      />
+      <select [(ngModel)]="selectCurrency" name="currency" required>
+        <option *ngFor="let currency of currencys" [value]="currency.value">{{ currency.value }}</option>
+      </select>
+      <button (click)="addAccount()">Thêm</button>
+    </div>
+  </div>
+</div>

@@ -76,13 +76,127 @@ button:hover{
     padding: 10px;
     border-radius: 50%;
 }
+.info {
+  display: flex;
+  flex-direction: column;
+}
+
+.type {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #333;
+}
+
+.type-wallet {
+  font-size: 0.85rem;
+  color: #888;
+}
 .balance{
     margin-top: 2%;
     font-size: 20px;
     width: 80%;
     height: 60%;
 }
+.amount {
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.amount.negative {
+  color: #e53935; /* Màu đỏ cho số âm */
+}
 .chart-container{
     width:100%;
     height: 100%;
+}
+.modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .modal-content {
+    background-color: white;
+    height: 70%;
+    width: 50%;
+    padding: 20px;
+    border-radius: 5px;
+    min-width: 300px;
+    text-align: center;
+  }
+  .modal-box,
+.wallet-select,
+.select-date {
+  margin-bottom: 20px; /* Khoảng cách giữa các phần */
+}
+
+.modal-box input,
+.modal-box select,
+.wallet-select select,
+.select-date input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd; /* Viền nhẹ */
+  border-radius: 5px; /* Bo góc */
+  font-size: 14px;
+  color: #333;
+  box-sizing: border-box; /* Đảm bảo padding không làm tăng kích thước */
+}
+
+.modal-box select,
+.wallet-select select {
+  appearance: none; /* Bỏ giao diện mặc định của select */
+  background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="gray"><path d="M0 0h12L6 12z"/></svg>') no-repeat right 10px center; /* Mũi tên tùy chỉnh */
+  background-color: #fff;
+}
+
+.modal-box input:focus,
+.modal-box select:focus,
+.wallet-select select:focus,
+.select-date input:focus {
+  outline: none;
+  border-color: #007bff; /* Viền xanh khi focus */
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1); /* Hiệu ứng focus */
+}
+
+.modal-box label,
+.wallet-select label,
+.select-date label {
+  display: block;
+  font-size: 14px;
+  color: #555; 
+  margin-bottom: 5px;
+  font-weight: 500;
+}
+
+.category {
+  margin-top: 15px; 
+}
+
+button {
+  background-color: #007bff; 
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 14px;
+  cursor: pointer;
+  display: block;
+  margin: 20px auto 0; 
+  transition: background-color 0.3s ease; 
+}
+
+button:hover {
+  background-color: #0056b3; 
+}
+
+button:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.3); 
 }

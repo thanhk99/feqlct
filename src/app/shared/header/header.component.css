@@ -1,150 +1,270 @@
-header{
+/* Header */
+header {
     width: 100%;
-    height: 30%;
     background-color: #234D73;
     border-radius: 10px 10px 50px 0;
-}
-.head{
+    position: relative;
+    padding-bottom: 15px; /* Giảm padding để làm ngắn chiều cao */
+  }
+  
+  /* Head */
+  .head {
     width: 100%;
-    height: 20%;
-}
-.card{
+    padding: 10px 0; /* Giảm padding để làm ngắn chiều cao */
+  }
+  
+  /* Card */
+  .card {
     background-color: white;
-    box-shadow:
-    0 1px 1px hsl(0deg 0% 0% / 0.075),
-    0 2px 2px hsl(0deg 0% 0% / 0.075),
-    0 4px 4px hsl(0deg 0% 0% / 0.075),
-    0 8px 8px hsl(0deg 0% 0% / 0.075),
-    0 16px 16px hsl(0deg 0% 0% / 0.075);
-    border-radius: 10px;
-}
-.user{
-    width: 80%;
-    margin-left: 10%;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    margin: 10px;
+  }
+  
+  /* User */
+  .user {
+    width: 90%;
+    margin: 0 auto;
     display: flex;
     justify-content: space-between;
-    text-align: center;
+    align-items: center;
     color: white;
-}
-.user p{
+    padding: 10px 0;
+  }
+  
+  .user p {
     cursor: pointer;
     font-size: 18px;
-}
-.user #username{
+    margin: 0;
+  }
+  
+  .user #username {
     font-size: 18px;
     font-weight: bold;
     font-family: serif;
-}
-.component{
-    width: 100%;
+  }
+  
+  .user-box {
+    display: flex;
+    align-items: center;
+  }
+  
+  .user-box p {
+    margin: 0;
+  }
+  
+  .user-box i {
+    font-size: 24px;
+  }
+  
+  /* Component */
+  .component {
+    width: 90%;
+    margin: 0 auto;
+    display: flex;
     flex-direction: column;
     justify-content: center;
-    text-align: center;
-    display: flex;
-}
-.row-com{
+  }
+  
+  .row-com {
     width: 100%;
     display: flex;
     justify-content: space-around;
-}
-.col-com{
-
-    padding: 1% 0%;
-    width: 30%;
-}
-.col-com .title{
-    font-size: 18px;
-    font-weight: bold;
-    margin-bottom: 5px;
-}
-.content-com{
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  
+  /* Card "Sơ lược" */
+  .col-com.card {
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    flex: 1;
+    min-width: 300px;
+    max-width: 400px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .col-com.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+  }
+  
+  .col-com.card .title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+  }
+  
+  /* Phần "Sơ lược" - Sắp xếp biểu đồ và thông tin nằm ngang */
+  .content-com {
     display: flex;
-    width: 100%;
     justify-content: space-around;
-}
-.chart-container{
-    height: 85px;
-    border-radius: 20px;
-    overflow: hidden;
-}
-#canvasjs-angular-chart-container-16{
-    height: 70%;
-}
-.col-2{
+  }
+  
+  .summary-row {
     display: flex;
-    float: left;
+    align-items: center;
+    gap: 20px;
+  }
+  
+  .chart-container {
+    width: 100px; /* Điều chỉnh kích thước biểu đồ */
+    height: 100px;
+  }
+  
+  .summary-details {
+    display: flex;
     flex-direction: column;
-    justify-content: space-around;
-    width: 40%;
-}
-.row-summary{
-    width: 100%;
+    gap: 5px;
+  }
+  
+  .summary-details .time {
+    font-size: 0.9rem;
+    color: #888;
+    margin-bottom: 5px;
+  }
+  
+  .row-summary {
     display: flex;
     justify-content: space-between;
-    float: left;
-}
-.content-summary{
+    font-size: 0.95rem;
+  }
+  
+  .row-summary span:first-child {
+    color: #333;
+  }
+  
+  .row-summary span:last-child {
+    font-weight: 600;
+  }
+  
+  /* Phần "Các tài khoản" */
+  .content-summary {
     display: flex;
     flex-direction: column;
-    justify-content: center;
-}
-.row-atm{
-    width: 100%;
+    gap: 12px;
+  }
+  
+  .row-atm {
     display: flex;
-    justify-content: space-around;
-}
-.atm-info{
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .row-atm:hover {
+    background-color: #e0f7fa;
+  }
+  
+  .atm-info {
     display: flex;
-    flex-direction: column;
-    text-align: left;
-}
-.atm-info span{
-    font-size: 18px;
-    font-weight: bold;
-}
-.atm-balance{
-    font-size: 18px;
-    text-align: center;
-    transform: translateY(25%);
-}
-.menu-head{
-    position: absolute;
-    width: 15%;
-    height: 100%;
-    background-color: rgba(0,0,0,.9);
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .atm-info span {
+    font-size: 1rem;
+    font-weight: 500;
+    color: #333;
+  }
+  
+  .atm-balance span {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #007bff;
+  }
+  
+  /* Menu */
+  .menu-head {
+    position: fixed;
+    width: 200px;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.9);
     left: 0;
     top: 0;
     bottom: 0;
-    border-radius: 10px 0 0 10px;
-
-}
-.close{
+    border-radius: 0 10px 10px 0;
+    z-index: 1000;
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  .menu-head.hidden {
+    transform: translateX(-100%);
+  }
+  
+  .close {
     position: absolute;
     font-size: 24px;
     cursor: pointer;
-    right: 0;
-    transition: ease-in-out 0.5s;
-}
-.hidden{
-    display: none;
-    transition: ease-in-out 0.5s;
-}
-ul{
+    right: 15px;
+    top: 15px;
+    color: #fcfcfc;
+    transition: color 0.3s;
+  }
+  
+  .close:hover {
+    color: #ccc;
+  }
+  
+  ul {
     list-style: none;
-    width: 70%;
-    margin: 35% auto;
-    height: 50%;
+    width: 80%;
+    margin: 60px auto 0;
+    padding: 0;
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
-}
-li{
+    gap: 15px;
+  }
+  
+  li {
     color: white;
-    width: 100%;
     cursor: pointer;
-    padding: 10px 0px ;
+    padding: 10px 15px;
     border-radius: 5px;
-}
-li:hover{
-    background-color: rgba(255,255,255,.5);
-}
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: background-color 0.3s;
+  }
+  
+  li:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+  }
+  
+  li i {
+    font-size: 1.2rem;
+  }
+  
+  /* Responsive */
+  @media (max-width: 768px) {
+    .row-com {
+      flex-direction: column;
+      align-items: center;
+    }
+  
+    .col-com.card {
+      min-width: 100%;
+      max-width: 100%;
+      margin: 10px 0;
+    }
+  
+    .summary-row {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  
+    .menu-head {
+      width: 180px;
+    }
+  
+    .user {
+      width: 95%;
+    }
+  }

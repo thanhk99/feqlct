@@ -3,107 +3,86 @@
         <div class="left-container">
             <div class="add-trans card"> 
                 <div class="btn-add">
-                    <button><i class="fa-solid fa-money-bill-transfer" style="color: #005cfa;"></i>Chuyển tiền</button>
+                    <button (click)="openModal('Chuyển tiền')"><i class="fa-solid fa-money-bill-transfer" style="color: #005cfa;"></i>Chuyển tiền</button>
                 </div>
                 <div class="btn-add">
-                    <button><i class="fa-solid fa-minus" style="color: #fd082c;"></i> Chi phí</button>
+                    <button (click)="openModal('Chi phí')"><i class="fa-solid fa-minus" style="color: #fd082c;"></i> Chi phí</button>
                 </div>
                 <div class="btn-add">
-                    <button><i class="fa-solid fa-plus" style="color: #63E6BE;"></i>Thu nhập</button>
+                    <button (click)="openModal('Thu nhập')"><i class="fa-solid fa-plus" style="color: #63E6BE;"></i>Thu nhập</button>
                 </div>
             </div>
             <div class="transactions card">
                 <div class="title">
-                    Các giao dịch <span (click)="pageTransaction()">Xem thêm</span>
+                  Các giao dịch <span (click)="pageTransaction()">Xem thêm</span>
                 </div>
-                <div class="row">
-                    <div class="col-1">
-                        <div class="icon">
-                            <i class="fa-solid fa-cart-shopping" style="color: #f8f9fc;"></i>
-                        </div>
-                        <div class="info">
-                            <div class="type">Đồ ăn/đồ uống</div>
-                            <div class="type-wallet">Atm</div>
-                        </div>
+                <div class="row" *ngFor="let transaction of transactions">
+                  <div class="col-1">
+                    <div class="icon">
+                      <i class="fa-solid fa-cart-shopping"></i>
                     </div>
-                    <div class="col-2">
-                        <div class="amout">-35.000VND</div>
-                        <div class="time">12/04/2025</div>
+                    <div class="info">
+                      <div class="type">{{ transaction.type }}</div>
+                      <div class="type-wallet">{{ transaction.wallet }}</div>
                     </div>
+                  </div>
+                  <div class="col-2">
+                    <div class="amount" [class.negative]="transaction.amount < 0">
+                      {{ transaction.amount | number }} VNĐ
+                    </div>
+                    <div class="time">{{ transaction.date }}</div>
+                  </div>
                 </div>
-                <div class="row">
-                    <div class="col-1">
-                        <div class="icon">
-                            <i class="fa-solid fa-cart-shopping" style="color: #f8f9fc;"></i>
-                        </div>
-                        <div class="info">
-                            <div class="type">Đồ ăn/đồ uống</div>
-                            <div class="type-wallet">Atm</div>
-                        </div>
-                    </div>
-                    <div class="col-2">
-                        <div class="amout">-35.000VND</div>
-                        <div class="time">12/04/2025</div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-1">
-                        <div class="icon">
-                            <i class="fa-solid fa-cart-shopping" style="color: #f8f9fc;"></i>
-                        </div>
-                        <div class="info">
-                            <div class="type">Đồ ăn/đồ uống</div>
-                            <div class="type-wallet">Atm</div>
-                        </div>
-                    </div>
-                    <div class="col-2">
-                        <div class="amout">-35.000VND</div>
-                        <div class="time">12/04/2025</div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-1">
-                        <div class="icon">
-                            <i class="fa-solid fa-cart-shopping" style="color: #f8f9fc;"></i>
-                        </div>
-                        <div class="info">
-                            <div class="type">Đồ ăn/đồ uống</div>
-                            <div class="type-wallet">Atm</div>
-                        </div>
-                    </div>
-                    <div class="col-2">
-                        <div class="amout">-35.000VND</div>
-                        <div class="time">12/04/2025</div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-1">
-                        <div class="icon">
-                            <i class="fa-solid fa-cart-shopping" style="color: #f8f9fc;"></i>
-                        </div>
-                        <div class="info">
-                            <div class="type">Đồ ăn/đồ uống</div>
-                            <div class="type-wallet">Atm</div>
-                        </div>
-                    </div>
-                    <div class="col-2">
-                        <div class="amout">-35.000VND</div>
-                        <div class="time">12/04/2025</div>
-                    </div>
-                </div>
-            </div>
+              </div>
         </div>
         <div class="right-container">
             <div class="balance card">
                 <div class="title">
-                    <p>Số dư</p>
-                    <span>Tổng số tiền đang sở hữu: 253.000VND</span>
+                    Biểu đồ 
                     <div class="chart-container">
                         <canvasjs-chart [options]="chartOptions"></canvasjs-chart>
                     </div>
                 </div>
             </div>
         </div>
-
+        <div *ngIf="isModalOpen" class="modal-backdrop" (click)="closeModal()">
+            <div class="modal-content" (click)="$event.stopPropagation()">
+              <h2>{{ type }}</h2>
+              <div class="modal-box">
+                <input type="number" name="amount" placeholder="Giá trị" [(ngModel)]="amount" required />
+                
+                <div class="category" *ngIf="type !== 'Chuyển tiền'">
+                  <label for="options">Chọn hạng mục:</label>
+                  <select [(ngModel)]="selectedValue" name="options" required>
+                    <option *ngFor="let option of getOptionsForType()" [value]="option">{{ option }}</option>
+                  </select>
+                </div>
+              </div>
+          
+              <div class="wallet-select">
+                <label for="source-wallet">
+                  {{ type === 'Chuyển tiền' ? 'Tài khoản nguồn:' : 'Chọn tài khoản:' }}
+                </label>
+                <select [(ngModel)]="selectWallet" name="source-wallet" required>
+                  <option *ngFor="let wallet of wallets" [value]="wallet.id">{{ wallet.nameWallet }}</option>
+                </select>
+              </div>
+          
+              <div class="wallet-select" *ngIf="type === 'Chuyển tiền'">
+                <label for="dest-wallet">Tài khoản đích:</label>
+                <select [(ngModel)]="selectDestWallet" name="dest-wallet" required>
+                  <option *ngFor="let wallet of wallets" [value]="wallet.id">{{ wallet.nameWallet }}</option>
+                </select>
+              </div>
+          
+              <div class="select-date">
+                <label for="date">Select a date:</label>
+                <input type="date" [(ngModel)]="selectedDate" name="date" required />
+              </div>
+          
+              <button (click)="closeModal()">Đóng</button>
+              <button (click)="confirm()">Xác nhận</button>
+            </div>
+          </div>
     </div>
 </div>

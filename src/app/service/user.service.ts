@@ -12,10 +12,10 @@ export class UserService {
   ) { }
   login(tk:any,mk:any){
     const body={
-      "tk":tk , 
-      "mk":mk ,
+    "account":tk,
+    "password":mk
     }
-    return this.http.post('http://localhost:8082/user/login',body)
+    return this.http.post('http://127.0.0.1:8083/user/login',body)
   }
   setCookieID(id:any){
     this.cookieService.set('id', id);
@@ -29,5 +29,20 @@ export class UserService {
   getCookiedName(){
     return this.cookieService.get('name')
   }
-
+  getWallet(){
+    let id=this.getCookieID()
+    const body={"idUser":id}
+    return this.http.post('http://127.0.0.1:8083/user/wallet' , body)
+  }
+  updateWallet(id:any,nameWallet:any,balance:number,currency:any){
+    let idUser=this.getCookieID()
+    const body={
+      "id":id,
+      "nameWallet":nameWallet,
+      "balance":balance,
+      "idUser":idUser,
+      "currency":currency
+    }
+    return this.http.post('http://127.0.0.1:8083/wallet/update',body)
+  }
 }

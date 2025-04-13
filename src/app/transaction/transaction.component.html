@@ -1,50 +1,56 @@
 <div class="content">
     <div class="container">
-        <table class="card">
-            <thead>
-                <tr>
-                    <th>Danh mục</th>
-                    <th>Tài khoản</th>
-                    <th>Giá trị</th>
-                    <th>Thời gian</th>
-                    <th>Edit</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let item of data" [class.active]="isActive[item.id]">
-                    <td>
-                        <span *ngIf="!isEditing[item.id]">{{item.category}}</span>
-                        <input *ngIf="isEditing[item.id]" [(ngModel)]="item.category" type="text" />
-                    </td>
-                    <td>
-                        <span *ngIf="!isEditing[item.id]">{{item.Wallet}}</span>
-                        <input *ngIf="isEditing[item.id]" [(ngModel)]="item.Wallet" type="text" />
-                    </td>
-                    <td>
-                        <span *ngIf="!isEditing[item.id]">{{item.Amount}}</span>
-                        <input *ngIf="isEditing[item.id]" [(ngModel)]="item.Amount" type="text" />
-                    </td>
-                    <td>
-                        <span *ngIf="!isEditing[item.id]">{{item.date}}</span>
-                        <input *ngIf="isEditing[item.id]" [(ngModel)]="item.date" type="text" />
-                    </td>
-                    <td >
-                        <i (click)="toggleMenu(item.id)" class="fa-solid fa-sliders"></i>
-                        <div *ngIf="showMenu[item.id]" class="dropdown-menu">
-                            <div class="menu-item" (click)="editItem(item.id)">Chỉnh sửa</div>
-                            <div class="menu-item" (click)="deleteItem(item.id)" >Xóa</div>
-                            <div class="menu-item" >Hoàn tiền</div>
-                        </div>
-                        <div *ngIf="isEditing[item.id]">
-                            <button (click)="saveItem(item.id)">Lưu</button>
-                            <button (click)="cancelEdit(item.id)">Hủy</button>
-                          </div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-        <div class="menu-edit">
-
-        </div>
+      <table class="card">
+        <thead>
+          <tr>
+            <th>Danh mục</th>
+            <th>Tài khoản</th>
+            <th>Giá trị</th>
+            <th>Thời gian</th>
+            <th>Edit</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of paginatedData" [class.active]="isActive[item.id - 1]">
+            <td>
+              <span *ngIf="!isEditing[item.id - 1]">{{item.type}}</span>
+              <input *ngIf="isEditing[item.id - 1]" [(ngModel)]="item.type" type="text" />
+            </td>
+            <td>
+              <span *ngIf="!isEditing[item.id - 1]">{{item.nameWallet}}</span>
+              <input *ngIf="isEditing[item.id - 1]" [(ngModel)]="item.idWallet" type="text" />
+            </td>
+            <td>
+              <span *ngIf="!isEditing[item.id - 1]">{{item.amount}}</span>
+              <input *ngIf="isEditing[item.id - 1]" [(ngModel)]="item.amount" type="text" />
+            </td>
+            <td>
+              <span *ngIf="!isEditing[item.id - 1]">{{item.time}}</span>
+              <input *ngIf="isEditing[item.id - 1]" [(ngModel)]="item.time" type="text" />
+            </td>
+            <td>
+              <i (click)="toggleMenu(item.id - 1)" class="fa-solid fa-sliders"></i>
+              <div *ngIf="showMenu[item.id - 1]" class="dropdown-menu">
+                <div class="menu-item" (click)="editItem(item.id - 1)">Chỉnh sửa</div>
+                <div class="menu-item" (click)="deleteItem(item.id - 1)">Xóa</div>
+                <div class="menu-item">Hoàn tiền</div>
+              </div>
+              <div *ngIf="isEditing[item.id - 1]">
+                <button (click)="saveItem(item.id - 1)">Lưu</button>
+                <button (click)="cancelEdit(item.id - 1)">Hủy</button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+  
+      <!-- Phân trang -->
+      <div class="pagination">
+        <button (click)="previousPage()" [disabled]="currentPage === 1">Trước</button>
+        <span>Trang {{currentPage}} / {{totalPages}}</span>
+        <button (click)="nextPage()" [disabled]="currentPage === totalPages">Tiếp</button>
+      </div>
+  
+      <div class="menu-edit"></div>
     </div>
-</div>
+  </div>

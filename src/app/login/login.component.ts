@@ -27,7 +27,7 @@ export class LoginComponent implements OnInit {
     this.userService.login(this.Account,this.Password).subscribe(
       (data:any)=>{
         this.userService.setCookieID(data.id)
-        this.userService.setCookiedName(data.fullname)
+        this.userService.setCookiedName(data.username)
         this.router.navigate(['/']);
       },
       (error:any)=>{
