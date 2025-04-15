@@ -92,4 +92,8 @@ export class HeaderComponent implements OnInit  {
   pageWallet(){
     this.router.navigate(['/wallet'])
   }
+  logout(){
+    location.reload()
+    this.userService.logout()
+  }
 }

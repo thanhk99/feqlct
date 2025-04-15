@@ -17,6 +17,9 @@ export class UserService {
     }
     return this.http.post('http://127.0.0.1:8083/user/login',body)
   }
+  logout(){
+    this.cookieService.deleteAll()
+  }
   setCookieID(id:any){
     this.cookieService.set('id', id);
   }

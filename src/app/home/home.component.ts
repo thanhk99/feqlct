@@ -60,7 +60,7 @@ export class HomeComponent implements OnInit {
       type: "column",
       dataPoints: []
     }],
-    width: 600,
+    width: 400,
     height: 200
   };
 
