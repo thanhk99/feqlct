@@ -37,10 +37,10 @@ export class HomeComponent implements OnInit {
     private route: Router,
     private userService: UserService,
     private transactionService: TransactionService,
-    private walletService: WalletService
+    private walletService: WalletService,
   ) {}
 
-  transactions = [{ type: 'Đồ ăn/đồ uống', wallet: 'Atm', amount: 35000, date: '12/04/2025' }];
+  transactions = [{ type: '', wallet: '', amount: 0, date: '' }];
   dataByDate: any[] = [];
   typeDate: string = "Chi phí";
   amount: number = 0;
@@ -52,9 +52,11 @@ export class HomeComponent implements OnInit {
   wallets = [{ id: 0, nameWallet: '' }];
   incomeOptions: string[] = ['Lương', 'Thưởng', 'Đầu tư', 'Khác'];
   expenseOptions: string[] = ['Ăn uống', 'Mua sắm', 'Hóa đơn', 'Khác'];
+  dataByMonth: any[] = []; 
+  dataByAccount: any[] = [];
   @Output() close = new EventEmitter<void>();
   isModalOpen = false;
-
+  filterType: string = 'day'
   chartOptions: ChartOptions = {
     data: [{
       type: "column",
@@ -63,8 +65,8 @@ export class HomeComponent implements OnInit {
     width: 400,
     height: 200
   };
-
   ngOnInit(): void {
+    this.loadData()
     this.userService.getWallet().subscribe(
       (data: any) => {
         this.wallets = data;
@@ -90,29 +92,75 @@ export class HomeComponent implements OnInit {
       }
     );
   }
+  onFilterChange(): void {
+    this.updateChart();
+  } 
+  private MonthFormat(month: string): string {
+    const [year, monthNum] = month.split('-');
+    return `${year}-${parseInt(monthNum).toString().padStart(2, '0')}`; // 2025-3 -> 2025-03
+  }
+  updateChart(): void {
+    let dataPoints: ChartDataPoint[] = [];
+    if (this.filterType === 'day') {
+      // Thống kê theo ngày (logic hiện tại)
+      const today = new Date();
+      const days = Array.from({ length: 7 }, (_, i) => {
+        const date = new Date(today);
+        date.setDate(today.getDate() - i);
+        return date.toISOString().split('T')[0]; // Định dạng YYYY-MM-DD
+      }).reverse();
 
-  private updateChart(): void {
-    // Tạo danh sách 7 ngày từ hôm nay trở về trước
-    const today = new Date();
-    const days = Array.from({ length: 7 }, (_, i) => {
-      const date = new Date(today);
-      date.setDate(today.getDate() - i);
-      return date.toISOString().split('T')[0]; // Định dạng YYYY-MM-DD
-    }).reverse(); // Đảo ngược để ngày cũ nhất ở đầu
+      dataPoints = days.map(day => {
+        const entry = this.dataByDate.find((item: any) => item.date === day);
+        return {
+          y: entry ? entry.total : 0,
+          label: day,
+          color: 'rgb(236, 17, 28)'
+        };
+      });
+    } else if (this.filterType === 'month') {
+      const months = Array.from({ length: 7 }, (_, i) => {
+        const date = new Date();
+        date.setMonth(date.getMonth() - i);
+        return `${date.getFullYear()}-${date.getMonth() + 1}`;
+      }).reverse();
 
-    // Ánh xạ dữ liệu từ dataByDate, gán y = 0 cho ngày không có dữ liệu
-    const dataPoints: ChartDataPoint[] = days.map(day => {
-      const entry = this.dataByDate.find((item: any) => item.date === day);
-      return {
-        y: entry ? entry.total : 0,
-        label: day,
-        color: "rgb(236, 17, 28)" // Màu đỏ cho chi phí, như trong mẫu
-      };
-    });
+      dataPoints = months.map(month => {
+        const normalizedMonth = this.MonthFormat(month);
+        const entry = this.dataByMonth.find((item: any) => item.month === normalizedMonth);
+        return {
+          y: entry ? entry.total : 0,
+          label: normalizedMonth,
+          color: 'rgb(236, 17, 28)'
+        };
+      });
+      console.log('Month dataPoints:', dataPoints);
+    } else if (this.filterType === 'account') {
+      // Thống kê theo tài khoản
+      dataPoints = this.dataByAccount.map(account => ({
+        y: account.total || 0,
+        label: account.accountName || 'Unknown',
+        color: 'rgb(236, 17, 28)'
+      }));
+    }
 
-    // Cập nhật chartOptions và trigger change detection
+    // Cập nhật chartOptions
     this.chartOptions.data[0].dataPoints = dataPoints;
     this.chartOptions = { ...this.chartOptions };
+    dataPoints=[]
+  }
+  private loadData(): void {
+    this.transactionService.getTotalByMonth("Chi phí").subscribe(
+      (data:any)=>{
+        console.log(data)
+        this.dataByMonth=data
+      }
+    )
+    this.transactionService.getTotalByWallet("Chi phí").subscribe(
+      (data:any)=>{
+        this.dataByAccount=data
+      }
+    )
   }
 
   pageTransaction() {
@@ -151,5 +199,6 @@ export class HomeComponent implements OnInit {
       this.walletService.updateBalance(this.selectWallet, this.amount).subscribe();
       this.closeModal();
     }
+    location.reload()
   }
 }

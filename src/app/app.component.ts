@@ -15,11 +15,10 @@ export class AppComponent implements OnInit{
     private router: Router,
     private cookieService: CookieService
   ){}
-
   ngOnInit(): void {
-      if(this.cookieService.get("id") === ''){
-        this.router.navigate(['/login']);
-      }
+    if(this.cookieService.get("id") === ''){
+      this.router.navigate(['/login']);
+    }
   }
   isLoginPage(): boolean {
     return this.router.url === '/login';

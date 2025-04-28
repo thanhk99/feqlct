@@ -86,6 +86,7 @@ export class WalletComponent implements OnInit {
         balance:0,
         lastUsed: new Date().toLocaleDateString('vi-VN')
       };
+      location.reload()
     }
   }
 }

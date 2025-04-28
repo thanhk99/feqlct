@@ -36,15 +36,24 @@
               </div>
         </div>
         <div class="right-container">
-            <div class="balance card">
-                <div class="title">
-                    Biểu đồ 
-                    <div class="chart-container">
-                        <canvasjs-chart [options]="chartOptions"></canvasjs-chart>
-                    </div>
-                </div>
-            </div>
-        </div>
+          <div class="balance card">
+              <div class="title">
+                  Biểu đồ
+                  <div class="filter">
+                      <label for="statsFilter">Thống kê theo: </label>
+                      <select id="statsFilter" [(ngModel)]="filterType" (ngModelChange)="onFilterChange()">
+                          <option value="day">Ngày</option>
+                          <option value="month">Tháng</option>
+                          <option value="account">Tài khoản</option>
+                      </select>
+                      <button (click)="updateChart()">Xác nhận</button>
+                  </div>
+                  <div class="chart-container">
+                      <canvasjs-chart [options]="chartOptions"></canvasjs-chart>
+                  </div>
+              </div>
+          </div>
+      </div>
         <div *ngIf="isModalOpen" class="modal-backdrop" (click)="closeModal()">
             <div class="modal-content" (click)="$event.stopPropagation()">
               <h2>{{ type }}</h2>

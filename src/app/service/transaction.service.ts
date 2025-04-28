@@ -33,4 +33,18 @@ export class TransactionService {
     }
     return this.http.post('http://localhost:8083/transaction/staticsExpense',body)
   }
+  getTotalByMonth(type:any){
+    const body={    
+      "idUser":this.userService.getCookieID(),
+      "type":type
+    }
+    return this.http.post('http://localhost:8083/transaction/staticsExpenseMonth',body)
+  }
+  getTotalByWallet(type:any){
+    const body={    
+      "idUser":this.userService.getCookieID(),
+      "type":type
+    }
+    return this.http.post('http://localhost:8083/transaction/staticsExpenseWallet',body)
+  }
 }
