@@ -100,6 +100,7 @@ export class TransactionComponent implements OnInit {
     const startIndex = (this.currentPage - 1) * this.itemsPerPage;
     const endIndex = startIndex + this.itemsPerPage;
     this.paginatedData = this.data.slice(startIndex, endIndex);
+    console.log(this.paginatedData)
   }
 
   // Chuyển sang trang trước
@@ -141,6 +142,14 @@ export class TransactionComponent implements OnInit {
   saveItem(index: number) {
     this.isEditing[index] = false;
     this.tempItem = null;
+    this.transactionService.editItem(this.paginatedData[index-1]).subscribe(
+      (response:any) =>{
+        console.log(response)
+        if(response.status === 'success') location.reload();       
+      },
+      (error) =>
+        console.log(error)
+    )
   }
 
   cancelEdit(index: number) {
@@ -156,6 +165,14 @@ export class TransactionComponent implements OnInit {
       // Cập nhật lại ID cho các giao dịch sau khi xóa
       this.data.forEach((item, i) => (item.id = i + 1));
       this.updatePagination();
+      this.transactionService.deleteItem(this.paginatedData[index-1]).subscribe(
+        (res:any)=>{
+          console.log(res)
+        },
+        (error) =>{
+          console.log(error)
+        }
+      )
     }
   }
 }

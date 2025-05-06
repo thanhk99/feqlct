@@ -11,33 +11,30 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let item of paginatedData" [class.active]="isActive[item.id - 1]">
+          <tr *ngFor="let item of paginatedData ; let i =index" [class.active]="isActive[i+1]">
             <td>
-              <span *ngIf="!isEditing[item.id - 1]">{{item.type}}</span>
-              <input *ngIf="isEditing[item.id - 1]" [(ngModel)]="item.type" type="text" />
+              <span>{{item.type}}</span>
             </td>
             <td>
-              <span *ngIf="!isEditing[item.id - 1]">{{item.nameWallet}}</span>
-              <input *ngIf="isEditing[item.id - 1]" [(ngModel)]="item.idWallet" type="text" />
+              <span>{{item.nameWallet}}</span>
             </td>
             <td>
-              <span *ngIf="!isEditing[item.id - 1]">{{item.amount}}</span>
-              <input *ngIf="isEditing[item.id - 1]" [(ngModel)]="item.amount" type="text" />
+              <span *ngIf="!isEditing[i+1]">{{item.amount}}</span>
+              <input *ngIf="isEditing[i+1]" [(ngModel)]="item.amount" type="text" />
             </td>
             <td>
-              <span *ngIf="!isEditing[item.id - 1]">{{item.time}}</span>
-              <input *ngIf="isEditing[item.id - 1]" [(ngModel)]="item.time" type="text" />
+              <span *ngIf="!isEditing[i+1]">{{item.time}}</span>
+              <input *ngIf="isEditing[i+1]" [(ngModel)]="item.time" type="text" />
             </td>
             <td>
-              <i (click)="toggleMenu(item.id - 1)" class="fa-solid fa-sliders"></i>
-              <div *ngIf="showMenu[item.id - 1]" class="dropdown-menu">
-                <div class="menu-item" (click)="editItem(item.id - 1)">Chỉnh sửa</div>
+              <i (click)="toggleMenu(i+1)" class="fa-solid fa-sliders"></i>
+              <div *ngIf="showMenu[i+1]" class="dropdown-menu">
+                <div class="menu-item" (click)="editItem(i+1)">Chỉnh sửa</div>
                 <div class="menu-item" (click)="deleteItem(item.id - 1)">Xóa</div>
-                <div class="menu-item">Hoàn tiền</div>
               </div>
-              <div *ngIf="isEditing[item.id - 1]">
-                <button (click)="saveItem(item.id - 1)">Lưu</button>
-                <button (click)="cancelEdit(item.id - 1)">Hủy</button>
+              <div *ngIf="isEditing[i+1]">
+                <button (click)="saveItem(i+1)">Lưu</button>
+                <button (click)="cancelEdit(i+1)">Hủy</button>
               </div>
             </td>
           </tr>

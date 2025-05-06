@@ -47,4 +47,25 @@ export class TransactionService {
     }
     return this.http.post('http://localhost:8083/transaction/staticsExpenseWallet',body)
   }
+  editItem(transaction:any){
+    const body= {
+      id:transaction.id,
+      type:transaction.type,
+      idWallet:transaction.idWallet,
+      idUser:transaction.idUser,
+      amount:transaction.amount,
+      spent:transaction.spent,
+      time:transaction.time
+    };
+    return this.http.post("http://127.0.0.1:8083/transaction/edit", body);
+  }
+  deleteItem(transaction:any){
+    const body= {
+      id:transaction.id,
+      type:transaction.type,
+      idWallet:transaction.idWallet,
+      amount:transaction.amount,
+    };
+    return this.http.post("http://127.0.0.1:8083/transaction/edit", body);
+  }
 }
